@@ -10,6 +10,10 @@ What is the difference between **authentication** and **authorization**? Give a 
 
 **Your answer:**
 
+Authentication and authorization are two distinct steps in access control within a web application. **Authentication** is the process of verifying a user’s identity, typically through credentials like a username and password. **Authorization**, on the other hand, determines what actions or resources that authenticated user is allowed to access.
+
+For example, Instagram, a user first authenticates by logging in with their credentials. Once authenticated, authorization rules define what they can do, such as: creating, updating, or deleting their own posts, while only being able to view \*not modify\* other users’ content. This separation ensures both secure identity verification and proper access control.
+
 ---
 
 ## Question 2
@@ -18,13 +22,19 @@ Why should passwords **never** be stored as plaintext in a database? Explain wha
 
 **Your answer:**
 
----
+Passwords should never be stored as plaintext in a database because if the database is ever compromised, attackers would immediately have access to every user’s actual password. This is a major security risk, especially since many users reuse passwords across multiple sites.
+
+Hashing is the process of converting a password into a fixed-length string of characters using a one-way cryptographic function. A key property of hashing is that it is **irreversible**, meaning the original password cannot be derived from the hash. Another important property is that the same input always produces the same output, allowing the server to verify a password by hashing the user’s login attempt and comparing it to the stored hash. This way, the server never needs to store the original password.
 
 ## Question 3
 
 Explain what it means when we say that "HTTP is stateless"? Explain why cookies are necessary in order to keep users logged-in across multiple sessions and how a server and a client work together to achieve this functionality.
 
 **Your answer:**
+
+When we say that HTTP is **stateless**, it means that each request from a client to a server is independent, and the server does not automatically remember any information about previous requests. In other words, every request is treated as if it is the first time the client is interacting with the server.
+
+Cookies are necessary to maintain login state because they allow the server to store a small piece of identifying data on the client. When a user logs in, the server creates a session and sends a cookie to the client, which is then included in future requests. The server reads this cookie to recognize the user and keep them logged in across multiple requests. This collaboration between client and server allows stateful behavior on top of a stateless protocol.
 
 ---
 
@@ -34,7 +44,9 @@ A frontend can hide a "Delete Account" button from users who aren't logged in. W
 
 **Your answer:**
 
----
+Hiding a "Delete Account" button on the frontend is not enough because frontend code can be easily bypassed or manipulated by a user. An attacker could still manually send a request to the `DELETE /api/users/:id` endpoint using tools like Postman or curl.
+
+To properly secure the route, the backend must implement two layers of protection: **authentication** and **authorization**. Authentication ensures the user is logged in and their identity is verified. Authorization ensures that the user has permission to perform the action, such as only allowing a user to delete their own account. Both layers are necessary to fully protect sensitive routes.
 
 ## Question 5
 
